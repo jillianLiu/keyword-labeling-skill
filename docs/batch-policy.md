@@ -52,10 +52,20 @@ the correction.
 
 ## Failed Batch Handling
 
-If structure validation or QA fails, the entire batch is returned for
-re-annotation.
+If structure validation fails, the entire batch is returned for re-annotation.
 
-The re-annotation must:
+If semantic QA fails because of systemic annotation problems, the entire batch
+is returned for re-annotation.
+
+Systemic problems include:
+
+- missing or duplicate keyword IDs
+- many rows copied mechanically from intake labels
+- repeated functional-vs-material misclassification
+- repeated risk/entity/platform misclassification
+- vague labels that hide uncertainty across the batch
+
+The full-batch re-annotation must:
 
 - read the original batch input again
 - read the QA report
@@ -65,5 +75,13 @@ The re-annotation must:
 - run script validation again
 - run independent QA again
 
-Partial patching is allowed only when the operator explicitly requests a local
-repair.
+If semantic QA fails only because a bounded set of rows needs web verification
+or a more concrete verification conclusion, targeted repair is allowed. The
+repair must:
+
+- preserve all rows and original order
+- only modify rows listed in the QA problems file
+- use web search for each row marked `requires_web_search=yes`
+- set `web_verification_status=performed` when verification is required
+- rerun script validation on the repaired full annotation file
+- receive independent QA again

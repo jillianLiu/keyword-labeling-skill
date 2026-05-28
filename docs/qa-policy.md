@@ -26,6 +26,8 @@ QA checks both structure and meaning:
 - brand, platform, competitor, software, IP, NSFW, medical, download, piracy,
   and sensitive terms are tagged reasonably
 - unclear terms have concrete web verification fields
+- rows marked `web_verification_required=yes` use `web_verification_status=performed`,
+  not `recommended`
 - human-review flags are justified
 
 ## Web Search In QA
@@ -63,5 +65,10 @@ Fail the whole batch when:
 - risky or entity-like terms are not flagged or verified
 - unclear rows are hidden under vague labels
 
-If QA fails, the whole batch must be re-annotated with the QA report as input.
-The re-annotation must use web search for the terms QA flagged as requiring it.
+If QA fails because of systemic semantic mistakes, the whole batch must be
+re-annotated with the QA report as input.
+
+If QA fails only because specific rows need web verification or a more concrete
+verification conclusion, targeted repair is allowed. The repair must preserve
+all rows, only update rows listed in the QA problem file, use web search for
+flagged terms, and then run validation plus independent QA again.

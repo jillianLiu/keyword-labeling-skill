@@ -101,7 +101,8 @@ Rules:
   concrete sentence.
 - `candidate_meaning_label` is provisional and can be merged later.
 - `web_verification_required` is `yes` or `no`.
-- If `web_verification_required=yes`, the verification fields must be filled.
+- If `web_verification_required=yes`, `web_verification_status` must be
+  `performed` and the verification fields must contain a concrete conclusion.
 - If `web_verification_required=no`, verification status can be
   `not_required` and the query can be blank.
 

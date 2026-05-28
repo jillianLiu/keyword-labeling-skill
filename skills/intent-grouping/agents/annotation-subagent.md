@@ -47,6 +47,9 @@ web_verification_query
 web_verification_conclusion
 ```
 
+If `web_verification_required=yes`, the status must be `performed`, not
+`recommended`, and the conclusion must summarize what was verified.
+
 Do not hide uncertainty inside vague labels.
 
 ## Functional Terms

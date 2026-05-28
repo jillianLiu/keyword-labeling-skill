@@ -185,11 +185,16 @@ The QA subagent checks semantic correctness, not only formatting:
   verification reason and conclusion
 - whether risk and human-review flags are reasonable
 
-If QA status is `不通过`, do not merge the batch. Reassign the entire batch for
-re-annotation or full-batch correction. The re-annotation must use web search
-for terms QA marked as unsuitable, unclear, risky, entity-like, or wrongly
-labeled. Then run script validation and independent QA again. Do not only patch
-a few visible rows unless the operator explicitly requests a local repair.
+If QA status is `不通过`, do not merge the batch.
+
+Use targeted repair when QA only flags a bounded set of rows that need web
+verification or a more concrete verification conclusion. The repair must keep
+all rows and order, update only QA problem rows, perform web search for flagged
+terms, rerun script validation, and receive independent QA again.
+
+Use full-batch re-annotation when QA finds systemic semantic mistakes,
+structure failures, missing IDs, duplicate IDs, repeated mechanical intake-label
+copying, or repeated intent/risk misclassification.
 
 Use `agents/qa-subagent.md` and `docs/qa-policy.md` for QA rules.
 

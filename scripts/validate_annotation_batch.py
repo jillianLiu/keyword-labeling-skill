@@ -88,6 +88,9 @@ def main() -> int:
                 if not value:
                     errors.append(f"{row_id}: blank required field {field}")
             if (row.get("web_verification_required") or "").strip().lower() in {"yes", "true", "1"}:
+                status = (row.get("web_verification_status") or "").strip().lower()
+                if status != "performed":
+                    errors.append(f"{row_id}: web verification required but status is not performed")
                 for field in WEB_VERIFICATION_FIELDS:
                     if not (row.get(field) or "").strip():
                         errors.append(f"{row_id}: web verification required but {field} is blank")

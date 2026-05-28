@@ -12,6 +12,9 @@ localization, image generation, and publishing workflows. It focuses only on:
 5. grouping keywords by semantic intent,
 6. producing human-reviewable classification workbooks.
 
+Final human-review outputs should default to Chinese column names and Chinese
+review notes unless the operator requests English.
+
 ## Workflow
 
 ```text
@@ -62,6 +65,7 @@ skills/         Codex skill definitions
 ## Review Invariants
 
 - Preserve every original keyword.
+- Use Chinese review-facing outputs by default.
 - Never silently drop risky, off-topic, duplicated, or malformed rows.
 - Treat deterministic labels as hints, not final semantic truth.
 - Verify every keyword's meaning before final grouping.

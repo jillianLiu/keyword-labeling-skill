@@ -2,6 +2,9 @@
 
 ## Formal Outputs
 
+Formal human-review outputs should use Chinese column names and Chinese review
+notes by default.
+
 These files are formal handoff artifacts:
 
 ```text
@@ -54,3 +57,13 @@ If coverage fails, do not proceed to global intent group consolidation.
 - low-confidence group merges
 - recommended core keywords that may be risky, unnatural, or weak-modifier
   variants
+
+Recommended Chinese review-facing file names:
+
+```text
+词义组审阅表.csv
+关键词明细表.csv
+人工确认表.csv
+QA汇总表.csv
+覆盖检查表.csv
+```

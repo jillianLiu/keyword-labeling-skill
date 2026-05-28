@@ -3,6 +3,9 @@
 This project uses plain CSV-compatible tables as the shared contract between
 scripts, agents, QA, and human review.
 
+Internal scripts may use English field names. Human-review exports should use
+Chinese column names by default.
+
 ## Intake Fact Table
 
 Produced by `keyword-intake`.

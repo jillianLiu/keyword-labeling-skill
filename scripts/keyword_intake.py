@@ -36,6 +36,31 @@ FIELDNAMES = [
     "notes",
 ]
 
+ZH_FIELDNAMES = {
+    "original_keyword_id": "原始词ID",
+    "keyword": "关键词",
+    "source_intent": "来源意图",
+    "volume": "搜索量",
+    "keyword_difficulty": "关键词难度",
+    "cpc": "CPC",
+    "near_match_type": "近似类型",
+    "near_match_group_id": "近似组ID",
+    "near_match_group_key": "近似组Key",
+    "near_match_group_count": "近似组数量",
+    "comparison_key": "对比键",
+    "morphology_key": "词形近似键",
+    "action_signal": "动作信号",
+    "object_signal": "对象信号",
+    "format_signal": "格式信号",
+    "modifier_signal": "修饰词信号",
+    "risk_level": "风险等级",
+    "risk_label": "风险标签",
+    "entity_label": "实体标签",
+    "site_fit": "站点适配度",
+    "site_mismatch_reason": "不匹配原因",
+    "notes": "备注",
+}
+
 
 ALIASES = {
     "keyword": {"keyword", "keywords", "query", "search term", "search_term"},
@@ -273,12 +298,17 @@ def build_fact_rows(rows: list[dict[str, object]], prefix: str) -> list[dict[str
     return fact_rows
 
 
-def write_rows(path: Path, rows: list[dict[str, str]]) -> None:
+def write_rows(path: Path, rows: list[dict[str, str]], locale: str) -> None:
+    fieldnames = FIELDNAMES
+    output_rows = rows
+    if locale == "zh":
+        fieldnames = [ZH_FIELDNAMES[field] for field in FIELDNAMES]
+        output_rows = [{ZH_FIELDNAMES[key]: value for key, value in row.items()} for row in rows]
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows(output_rows)
 
 
 def main() -> int:
@@ -287,6 +317,7 @@ def main() -> int:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--sheet")
     parser.add_argument("--id-prefix", default="KW")
+    parser.add_argument("--locale", choices=["en", "zh"], default="en")
     args = parser.parse_args()
 
     suffix = args.input_file.suffix.lower()
@@ -298,7 +329,7 @@ def main() -> int:
         parser.error("input_file must be .xlsx, .csv, or .tsv")
 
     fact_rows = build_fact_rows(rows, args.id_prefix)
-    write_rows(args.out, fact_rows)
+    write_rows(args.out, fact_rows, args.locale)
     print(f"wrote {len(fact_rows)} fact rows to {args.out}")
     return 0
 

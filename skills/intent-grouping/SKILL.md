@@ -19,6 +19,9 @@ Intake output can guide review, but it must not decide final meaning.
 Do not generate final page candidates in this skill. Stop at intent-group
 classification tables and coverage checks.
 
+Use Chinese column names and Chinese review notes for final human-review
+outputs unless the operator explicitly requests English.
+
 ## Required Input
 
 Use the output from `keyword-intake`.

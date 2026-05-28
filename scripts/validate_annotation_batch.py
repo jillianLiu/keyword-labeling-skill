@@ -21,6 +21,9 @@ REQUIRED_ANNOTATION_FIELDS = [
     "needs_human_review",
     "human_review_reason",
     "web_verification_required",
+]
+
+WEB_VERIFICATION_FIELDS = [
     "web_verification_status",
     "web_verification_query",
     "web_verification_conclusion",
@@ -51,7 +54,11 @@ def main() -> int:
     if source_rows and "original_keyword_id" not in source_rows[0]:
         errors.append("input batch missing original_keyword_id")
     if annotation_rows:
-        missing_fields = [field for field in REQUIRED_ANNOTATION_FIELDS if field not in annotation_rows[0]]
+        missing_fields = [
+            field
+            for field in REQUIRED_ANNOTATION_FIELDS + WEB_VERIFICATION_FIELDS
+            if field not in annotation_rows[0]
+        ]
         if missing_fields:
             errors.append(f"annotation missing required fields: {', '.join(missing_fields)}")
 
@@ -81,7 +88,7 @@ def main() -> int:
                 if not value:
                     errors.append(f"{row_id}: blank required field {field}")
             if (row.get("web_verification_required") or "").strip().lower() in {"yes", "true", "1"}:
-                for field in ["web_verification_status", "web_verification_query", "web_verification_conclusion"]:
+                for field in WEB_VERIFICATION_FIELDS:
                     if not (row.get(field) or "").strip():
                         errors.append(f"{row_id}: web verification required but {field} is blank")
 

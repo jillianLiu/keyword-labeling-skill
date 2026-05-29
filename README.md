@@ -282,6 +282,7 @@ skills/         Codex skill 定义和 subagent 规则
 
 ## 重要文档
 
+- [中英文简明操作步骤](docs/operator-steps.zh-en.md)
 - [中文操作手册](docs/runbook.zh.md)
 - [英文操作手册](docs/runbook.md)
 - [表结构说明](docs/schemas.md)

@@ -30,6 +30,55 @@ raw keyword export
 -> human review
 ```
 
+For the exact operating commands, follow `docs/runbook.md`.
+
+## Quick Commands
+
+Build intake:
+
+```bash
+python3 scripts/keyword_intake.py "/absolute/path/to/source.xlsx" \
+  --sheet "<sheet-name>" \
+  --id-prefix "<PREFIX>" \
+  --out outputs/<job-id>/intake_fact_table.csv
+```
+
+Split batches:
+
+```bash
+python3 scripts/prepare_batches.py outputs/<job-id>/intake_fact_table.csv \
+  --out-dir outputs/<job-id> \
+  --batch-size 200
+```
+
+Validate one annotation batch:
+
+```bash
+python3 scripts/validate_annotation_batch.py \
+  --input-batch outputs/<job-id>/batches/batch_XXX.csv \
+  --annotation outputs/<job-id>/annotations/batch_XXX_annotations.csv
+```
+
+Merge QA-passed batches:
+
+```bash
+python3 scripts/merge_annotations.py \
+  --source outputs/<job-id>/<source-slice-or-full-intake>.csv \
+  --annotations-dir outputs/<job-id>/merge_ready_<range> \
+  --out outputs/<job-id>/merged/full_annotation_details_<range>.csv \
+  --coverage-report outputs/<job-id>/merged/coverage_report_<range>.csv
+```
+
+Build filterable workbook:
+
+```bash
+python3 scripts/build_review_workbook.py \
+  --detail outputs/<job-id>/merged/full_annotation_details_<range>_zh.csv \
+  --qa-summary outputs/<job-id>/merged/qa_summary_<range>.csv \
+  --coverage outputs/<job-id>/merged/coverage_report_<range>.csv \
+  --out outputs/<job-id>/merged/人工审阅工作簿_<range>.xlsx
+```
+
 ## Skills
 
 ### keyword-intake
@@ -83,3 +132,4 @@ skills/         Codex skill definitions
 - `docs/batch-policy.md`: 200-keyword batch rule and failed-batch handling
 - `docs/qa-policy.md`: independent QA requirements
 - `docs/output-contract.md`: final and intermediate outputs
+- `docs/runbook.md`: step-by-step execution commands

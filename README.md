@@ -14,6 +14,8 @@ localization, image generation, and publishing workflows. It focuses only on:
 
 Final human-review outputs should default to Chinese column names and Chinese
 review notes unless the operator requests English.
+When possible, provide an `.xlsx` review workbook with filters enabled on every
+sheet.
 
 ## Workflow
 

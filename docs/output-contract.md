@@ -21,6 +21,11 @@ Optional:
 review_workbook.xlsx
 ```
 
+When producing a human review workbook, prefer `.xlsx` with filterable columns
+on every sheet. CSV files remain useful intermediate artifacts, but the review
+handoff should let operators filter by risk, group, review flag, QA status,
+keyword volume, and verification status.
+
 ## Intermediate Outputs
 
 These files can be regenerated:
@@ -66,4 +71,5 @@ Recommended Chinese review-facing file names:
 人工确认表.csv
 QA汇总表.csv
 覆盖检查表.csv
+人工审阅工作簿.xlsx
 ```
